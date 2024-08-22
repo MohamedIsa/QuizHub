@@ -59,7 +59,8 @@ const Login = () => {
             <Button type="submit" className="w-full">Login</Button>
           </form>
         </CardContent>
-        <p className="text-xs text-center pb-4">Don't have an account? <a href="/signup" className='text-blue-400 hover:text-blue-500'>Sign up</a></p>
+        <p className="text-xs text-center pb-4">Don&apos;t have an account? <a href="/signup" className="text-blue-400 hover:text-blue-500">Sign up</a></p>
+
       </Card>
       </div>
     
