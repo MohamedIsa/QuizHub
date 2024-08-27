@@ -10,12 +10,17 @@ const SignOut = () => {
 
   useEffect(() => {
     const handleSignOut = async () => {
-      await supabase.auth.signOut();
-      router.push("/");
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Error signing out:', error);
+        // Handle sign-out error here (optional)
+      } else {
+        router.push("/");
+      }
     };
 
     handleSignOut();
-  }, [router, supabase.auth]);
+  }, [router, supabase]);
 
   return (
     <div className="flex items-center justify-center min-h-screen">
