@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../..
 
 const SignUp = () => {
   const supabase = createClient();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,11 +17,22 @@ const SignUp = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signUp({ email, password });
+    
+    // Sign up the user with email and password
+    const { data , error } = await supabase.auth.signUp({ email, password });
+
     if (error) {
       setError(error.message);
-    } else {
-      router.push('/login'); 
+    } else if (data.user) {
+      const { error: insertError } = await supabase
+        .from('users')
+        .insert([{ id: data.user.id, name, email }]);
+
+      if (insertError) {
+        setError(insertError.message);
+      } else {
+        router.push('/login');
+      }
     }
   };
 
@@ -34,6 +46,16 @@ const SignUp = () => {
         <CardContent>
           {error && <p className="mb-4 text-red-500">{error}</p>}
           <form onSubmit={handleSignUp}>
+            <div className="mb-4">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
             <div className="mb-4">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -50,7 +72,6 @@ const SignUp = () => {
                 id="password"
                 type="password"
                 value={password}
-                
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
