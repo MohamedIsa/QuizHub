@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation"; // Use this if you are on Next.js 13 or higher
 import { createClient } from "../../utils/supabase/client";
 
 const SignOut = () => {
@@ -12,15 +12,14 @@ const SignOut = () => {
     const handleSignOut = async () => {
       const { error } = await supabase.auth.signOut();
       if (error) {
-        console.error('Error signing out:', error);
-        // Handle sign-out error here (optional)
+        console.error("Error signing out:", error);
       } else {
         router.push("/");
       }
     };
 
     handleSignOut();
-  }, [router, supabase]);
+  }, [router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen">
