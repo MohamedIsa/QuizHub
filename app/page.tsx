@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../utils/supabase/client"; // Adjust the import path as necessary
-import Navbar from "../components/ui/Navbar";
+
 
 export default function Home() {
   const supabase = createClient();
@@ -40,8 +40,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
-      <main className="flex min-h-screen w-screen flex-col items-center justify-between p-24">
+      <main className="flex min-h-screen w-screen flex-col items-center  pt-40">
         <h1 className="text-4xl font-bold">Welcome to <span className="text-red-400">Quiz Hub!</span></h1>
         <p className="mt-4 text-lg">The best place to test your knowledge</p>
         {isLoggedIn ? (
